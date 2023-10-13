@@ -10,18 +10,42 @@ import {
   Title,
   Wrapper,
 } from './styles';
+import { usePosts } from '@/api/scraper/getPosts';
+import Loading from '../Loading';
+import { Post } from '@/api/scraper/types';
+import List from './List';
 
 const Home = () => {
   const [userId, setUserId] = useState('');
+  const [posts, setPosts] = useState<Post[]>([]);
+  const {
+    mutate: getPosts,
+    isLoading,
+    isSuccess,
+  } = usePosts({
+    options: {
+      onSuccess: (data) => {
+        setPosts(data.posts);
+        console.log(data);
+      },
+    },
+  });
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
 
     setUserId(value);
   };
 
+  const handleSubmit = () => {
+    getPosts('');
+  };
+
+  console.log(posts, '?');
+
   return (
     <Container>
+      {isLoading && <Loading backgroundColor='grey' />}
       <Title>Velog 게시글 긁어오기</Title>
 
       <Wrapper>
@@ -29,12 +53,16 @@ const Home = () => {
         <FlexBox gap={16}>
           <Input
             value={userId}
-            placeholder='ssssssssy'
+            placeholder='velog id'
             onChange={handleInputChange}
+            name='userId'
+            autoFocus={true}
           />
-          <SubmitBtn>확인</SubmitBtn>
+          <SubmitBtn onClick={handleSubmit}>확인</SubmitBtn>
         </FlexBox>
       </Wrapper>
+
+      {isSuccess && <List posts={posts} />}
     </Container>
   );
 };

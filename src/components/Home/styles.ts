@@ -7,6 +7,15 @@ export const FlexBox = styled.div<{ gap?: number }>`
   gap: ${({ gap }) => `${gap}px`};
 `;
 
+export const FlexColumnBox = styled.div<{ gap?: number }>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: ${({ gap }) => (gap ? `${gap}px` : '0')};
+`;
+
 export const Container = styled(FlexBox)`
   width: 100%;
   height: 100%;
@@ -26,12 +35,17 @@ export const Input = styled.input`
   background: #05c072;
 
   ::placeholder {
-    color: white;
+    color: rgba(0, 92, 54, 0.4);
   }
 
   &:focus {
     outline: none;
     background: transparent;
+    color: black;
+  }
+
+  &:focus::placeholder {
+    color: #8e959e;
   }
 `;
 
