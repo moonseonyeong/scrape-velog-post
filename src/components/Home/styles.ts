@@ -66,4 +66,11 @@ export const SubmitBtn = styled.button`
   padding: 8px;
   background-color: #1e2023;
   color: white;
+
+  :disabled {
+    background-color: #6e7781;
+    border-color: #6e7781;
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 `;

@@ -38,14 +38,19 @@ const Home = () => {
   };
 
   const handleSubmit = () => {
-    getPosts('');
+    getPosts(userId);
   };
 
   console.log(posts, '?');
 
   return (
     <Container>
-      {isLoading && <Loading backgroundColor='grey' />}
+      {isLoading && (
+        <>
+          <div>게시글이 많을수록 시간이 오래 소요됩니다.</div>
+          <Loading backgroundColor='grey' />
+        </>
+      )}
       <Title>Velog 게시글 긁어오기</Title>
 
       <Wrapper>
@@ -58,7 +63,9 @@ const Home = () => {
             name='userId'
             autoFocus={true}
           />
-          <SubmitBtn onClick={handleSubmit}>확인</SubmitBtn>
+          <SubmitBtn disabled={userId.length === 0} onClick={handleSubmit}>
+            확인
+          </SubmitBtn>
         </FlexBox>
       </Wrapper>
 
